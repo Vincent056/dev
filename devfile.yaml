@@ -32,6 +32,8 @@ components:
           capabilities:
             add:
               - CAP_SYS_ADMIN
+              - SETUID
+              - SETGID
     container:
       image: quay.io/vincent7/dev-tool:latest
       memoryLimit: 2Gi
