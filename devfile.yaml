@@ -1,18 +1,18 @@
 schemaVersion: 2.2.0
 metadata:
-  name: compliance-operator-2
+  name: compliance-operator
   version: 2.2.0
 attributes:
   controller.devfile.io/scc: container-build
 projects:
-  # - name: cac-content-fork
-  #   git:
-  #     remotes:
-  #       origin: "https://github.com/Vincent056/cac-content-fork.git"
-  #       upstream: "https://github.com/ComplianceAsCode/content.git"
-  #     checkoutFrom:
-  #       remote: origin
-  #       revision: master
+  - name: cac-content-fork
+    git:
+      remotes:
+        origin: "https://github.com/Vincent056/cac-content-fork.git"
+        upstream: "https://github.com/ComplianceAsCode/content.git"
+      checkoutFrom:
+        remote: origin
+        revision: master
   - name: compliance-operator
     git:
       remotes:
@@ -44,6 +44,9 @@ components:
 commands:
   - id: install-dependencies
     exec:
-      commandLine: 'pip3 install -r requirements.txt'
+      commandLine: pip3 install -r requirements.txt
       component: dev-tool
       workingDir: /projects/cac-content-fork
+      group:
+        kind: build
+        isDefault: true
