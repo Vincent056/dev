@@ -3,16 +3,16 @@ metadata:
   name: compliance-operator
   version: 2.2.0
 attributes:
-  controller.devfile.io/scc: container-build
+  controller.devfile.io/scc: privileged
 projects:
-  - name: cac-content-fork
-    git:
-      remotes:
-        origin: "https://github.com/Vincent056/cac-content-fork.git"
-        upstream: "https://github.com/ComplianceAsCode/content.git"
-      checkoutFrom:
-        remote: origin
-        revision: master
+  # - name: cac-content-fork
+  #   git:
+  #     remotes:
+  #       origin: "https://github.com/Vincent056/cac-content-fork.git"
+  #       upstream: "https://github.com/ComplianceAsCode/content.git"
+  #     checkoutFrom:
+  #       remote: origin
+  #       revision: master
   - name: compliance-operator
     git:
       remotes:
@@ -25,15 +25,17 @@ components:
   - name: dev-tool
     attributes:
       container-overrides:
-        resources:
-          limits:
-            "github.com/fuse": "1"
         securityContext:
-          capabilities:
-            add:
-              - CAP_SYS_ADMIN
-              - SETUID
-              - SETGID
+          privileged: true
+        # resources:
+        #   limits:
+        #     github.com/fuse: 1
+        # securityContext:
+        #   capabilities:
+        #     add:
+        #       - CAP_SYS_ADMIN
+        #       - SETUID
+        #       - SETGID
     container:
       image: quay.io/vincent7/dev-tool:latest
       memoryLimit: 2Gi
@@ -41,12 +43,12 @@ components:
       env:
         - name: KUBEDOCK_ENABLED
           value: "true"
-commands:
-  - id: install-dependencies
-    exec:
-      commandLine: pip3 install -r requirements.txt
-      component: dev-tool
-      workingDir: /projects/cac-content-fork
-      group:
-        kind: build
-        isDefault: true
+# commands:
+#   - id: install-dependencies
+#     exec:
+#       commandLine: pip3 install -r requirements.txt
+#       component: dev-tool
+#       workingDir: /projects/cac-content-fork
+#       group:
+#         kind: build
+#         isDefault: true
